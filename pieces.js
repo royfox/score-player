@@ -5,7 +5,8 @@ var pieces = [
         'pdfUrl' : 'IMSLP06801-Beethoven_-_Symphony_No.7_Mvt.II_(ed._Unger).pdf',
         'videoId': '-4788Tmz9Zo',
         'composer': 'Beethoven',
-        'title': 'Symphony No 7, 2nd Movement, Allegretto'
+        'title': 'Symphony No 7, 2nd Movement, Allegretto',
+        'margin': -30
     },
     {
         'pages': [32,  45,  60,  79,  92,  99,  105, 114, 120, 126,
@@ -17,7 +18,7 @@ var pieces = [
         'pdfUrl': 'IMSLP54076-PMLP08825-Dvorak_op.088_Sinfonie_Nr.8_1.Allegro_con_brio_fs_SNKLHU_3_8.pdf',
         'videoId': 'QXAv-NGppFw',
         'composer': 'Dvorak',
-        'title': 'Symphony No 8, 1st Movement, Allegro con brio'
+        'title': 'Symphony No 8, 1st Movement, Allegro con brio',
     },
     {
         'pages': [28,  33,  35,  52,  70,  84,  100, 140, 156, 170,
@@ -29,7 +30,8 @@ var pieces = [
         'pdfUrl': 'IMSLP13080-Mahler-Symphony_No.5_I.pdf',
         'videoId': 'fEGNNuEM3Fc',
         'composer': 'Mahler',
-        'title': 'Symphony No 5, 1st Movement, Trauermarsch'
+        'title': 'Symphony No 5, 1st Movement, Trauermarsch',
+        'margin': -60
     }
 ]
 pieces = pieces.map(piece => {

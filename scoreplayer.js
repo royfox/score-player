@@ -17,6 +17,7 @@ var YouTube = (function() {
 
     var piece;
     var player = null;
+    var minimumWidth = 300;
 
     function getCurrentPageFromTime(currentTime) {
         if(currentTime >= Math.max(...piece.pages)) {
@@ -36,9 +37,17 @@ var YouTube = (function() {
         }
     }
 
+    function getMargin() {
+        if (typeof(piece.margin) != 'undefined') {
+            return piece.margin;
+        } else {
+            return 0;
+        }
+    }
+
     function resize() {
-        var spaceForVideo = window.innerWidth - document.getElementById("pdf-canvas").width
-        var width = Math.max(spaceForVideo - 50, 300)
+        var spaceForVideo = window.innerWidth - document.getElementById("pdf-canvas").width;
+        var width = Math.max(spaceForVideo - getMargin(), minimumWidth) - 50;
         var height = width / 1.64
         player.setSize(width, height)
     }
@@ -94,7 +103,8 @@ var YouTube = (function() {
         },
         'resize': function() {
             resize();
-        }
+        },
+        'minimumWidth': minimumWidth
     }
 })();
 
@@ -120,7 +130,17 @@ var PDF = (function() {
         pdfDoc.getPage(num).then(function(page) {
             var targetHeight = window.innerHeight;
             var viewport = page.getViewport({ scale: 1, });
-            var scale = targetHeight / viewport.height;
+            var margin = window.innerWidth - viewport.width - 100;
+
+            // if the window is narrow, set the width to leave room for the video
+            // otherwise, just make it as tall as we can
+            if(margin < YouTube.minimumWidth) {
+
+                var targetWidth = window.innerWidth - YouTube.minimumWidth;
+                var scale = targetWidth / viewport.width;
+            } else {
+                var scale = targetHeight / viewport.height;
+            }
             var scaledViewport = page.getViewport({ scale: scale, });
 
             canvas.width = scaledViewport.width;
