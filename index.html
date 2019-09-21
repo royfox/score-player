@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        #video-container {
+            position: absolute;
+            right:10px;
+            top:40px;
+        }
+        #select-container {
+          position: absolute;
+          right: 5px;
+          top: 5px;
+
+        }
+        body {
+          font-family: Georgia, serif;
+        }
+        #page_num {
+          cursor: pointer;
+        }
+        .debug {
+          opacity: 0.2;
+        }
+    </style>
+  </head>
+  <body>
+
+  <div id="pdf-column">
+  <div id="pdf-navigation" style="display:none;">
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+    &nbsp; &nbsp;
+    <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+    &nbsp; &nbsp;
+    <span class="debug">
+      Sync PDF and Video<input type="checkbox" id="sync" checked />
+    </span>
+
+  </div>
+    <div id="select-container">
+    <form action="" method="get">
+      <select name="p" id="select-piece">
+
+      </select>
+      <button action="submit">Go</button>
+    </form>
+
+
+    </div>
+
+  <canvas id="pdf-canvas"></canvas>
+  </div>
+  <div id="video-column">
+    <div id="video-container">
+      <div id="video"></div>
+    </div>
+  </div>
+
+
+
+
+
+  <script src="http://mozilla.github.io/pdf.js/build/pdf.js"></script>
+  <script src="pieces.js"></script>
+  <script src="scoreplayer.js"></script>
+
+  </body>
+</html>
