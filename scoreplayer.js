@@ -101,7 +101,7 @@ var YouTube = (function() {
 var PDF = (function() {
 
     var pdfjsLib = window['pdfjs-dist/build/pdf'];
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'http://mozilla.github.io/pdf.js/build/pdf.worker.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
     var pdfDoc = null,
         pageNum = 1,
