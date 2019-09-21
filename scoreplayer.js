@@ -68,12 +68,6 @@ var YouTube = (function() {
                resize()
           }, 100);
         });
-
-        setInterval(function() {
-            if(PDF.isReady() && document.getElementById("sync").checked) {
-                PDF.renderPage(getCurrentPageFromTime(player.getCurrentTime()))
-            }
-        }, 1000)
     }
 
 
@@ -82,6 +76,11 @@ var YouTube = (function() {
             event.target.playVideo();
             player.seekTo(piece.pages[0])
             resize();
+            setInterval(function() {
+                if(PDF.isReady() && document.getElementById("sync").checked) {
+                    PDF.renderPage(getCurrentPageFromTime(player.getCurrentTime()))
+                }
+            }, 1000)
         },
         'onIframeReady': function() {
             player = new YT.Player('video', {
@@ -184,7 +183,7 @@ var PDF = (function() {
     }
 
     function goToPage(page) {
-        if (page <= 1) {
+        if (page < 1) {
             return;
         }
          if (page > pdfDoc.numPages) {
