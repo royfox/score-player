@@ -52,20 +52,6 @@ var YouTube = (function() {
         player.setSize(width, height)
     }
 
-    var resizeDebouncer;
-    window.addEventListener('resize', function(event){
-      clearTimeout(resizeDebouncer);
-      resizeDebouncer = setTimeout(function() {
-           PDF.resize()
-           resize()
-      }, 100);
-    });
-
-    setInterval(function() {
-        if(PDF.isReady() && document.getElementById("sync").checked) {
-            PDF.renderPage(getCurrentPageFromTime(player.getCurrentTime()))
-        }
-    }, 1000)
 
     function init() {
         var tag = document.createElement('script');
@@ -73,6 +59,21 @@ var YouTube = (function() {
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var resizeDebouncer;
+        window.addEventListener('resize', function(event){
+          clearTimeout(resizeDebouncer);
+          resizeDebouncer = setTimeout(function() {
+               PDF.resize()
+               resize()
+          }, 100);
+        });
+
+        setInterval(function() {
+            if(PDF.isReady() && document.getElementById("sync").checked) {
+                PDF.renderPage(getCurrentPageFromTime(player.getCurrentTime()))
+            }
+        }, 1000)
     }
 
 
@@ -80,7 +81,7 @@ var YouTube = (function() {
         'onPlayerReady': function(event) {
             event.target.playVideo();
             player.seekTo(piece.pages[0])
-            PDF.init(piece['pdfUrl'])
+            resize();
         },
         'onIframeReady': function() {
             player = new YT.Player('video', {
@@ -102,7 +103,14 @@ var YouTube = (function() {
             init();
         },
         'resize': function() {
-            resize();
+            if(player == null) {
+                init();
+            } else {
+                resize();
+            }
+        },
+        'setPiece': function(p) {
+            piece = p;
         },
         'minimumWidth': minimumWidth
     }
@@ -209,6 +217,8 @@ var PDF = (function() {
                 pdfDoc = pdfDoc_;
                 document.getElementById('page_count').textContent = pdfDoc.numPages;
                 renderPage(pageNum);
+                document.getElementById("pdf-navigation").style.display = 'block';
+                document.getElementById("loader").style.display = 'none';
             });
         },
         'isReady': function() {
@@ -228,9 +238,10 @@ let urlPieces = window.location.search.substr(1).split("=");
 if(urlPieces.length == 2 && urlPieces[0] == "p") {
     var piece = pieces.find(piece => piece['slug'] == urlPieces[1]);
     window.document.title = piece['name']
-    document.getElementById("pdf-navigation").style.display = 'block';
     document.getElementById("select-piece").value = piece.slug;
-    YouTube.init(piece)
+    document.getElementById("loader").style.display = 'block';
+    YouTube.setPiece(piece);
+    PDF.init(piece['pdfUrl']);
 }
 
 
