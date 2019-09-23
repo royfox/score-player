@@ -3,11 +3,29 @@
     right:20px;
     top:40px;
 }
+
 #select-container {
     position: absolute;
     right: 5px;
     top: 7px;
 }
+#select-container.intro {
+    position: static;
+    width: 600px;
+    margin:100px auto;
+}
+#select-container.intro select {
+    font-size: 16px;
+    width: 500px;
+}
+#select-container.intro button {
+    font-size: 14px;
+    padding: 3px 12px;
+}
+#intro {
+    color: #444;
+}
+
 body {
     font-family: Georgia, serif;
 }
@@ -67,9 +85,11 @@ button:focus {
     color: #444;
 }
 
+
 #loader span {
     font-size: 24px;
 }
+
 
 .spinner {
   margin: 10px auto;

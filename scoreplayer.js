@@ -17,7 +17,7 @@ var YouTube = (function() {
 
     var piece;
     var player = null;
-    var minimumWidth = 300;
+    var minimumWidth = 400;
 
     function getCurrentPageFromTime(currentTime) {
         if(currentTime >= Math.max(...piece.pages)) {
@@ -81,6 +81,11 @@ var YouTube = (function() {
                     PDF.renderPage(getCurrentPageFromTime(player.getCurrentTime()))
                 }
             }, 1000)
+            document.getElementById("loader").style.display = 'none';
+            document.getElementById("video-container").style.display = 'block';
+            PDF.resize()
+            document.getElementById("pdf-canvas").style.visibility = 'visible';
+
         },
         'onIframeReady': function() {
             player = new YT.Player('video', {
@@ -137,7 +142,7 @@ var PDF = (function() {
         pdfDoc.getPage(num).then(function(page) {
             var targetHeight = window.innerHeight;
             var viewport = page.getViewport({ scale: 1, });
-            var margin = window.innerWidth - viewport.width - 100;
+            var margin = window.innerWidth - document.getElementById("pdf-canvas").width - 100;
 
             // if the window is narrow, set the width to leave room for the video
             // otherwise, just make it as tall as we can
@@ -217,7 +222,6 @@ var PDF = (function() {
                 document.getElementById('page_count').textContent = pdfDoc.numPages;
                 renderPage(pageNum);
                 document.getElementById("pdf-navigation").style.display = 'block';
-                document.getElementById("loader").style.display = 'none';
             });
         },
         'isReady': function() {
@@ -239,6 +243,8 @@ if(urlPieces.length == 2 && urlPieces[0] == "p") {
     window.document.title = piece['name']
     document.getElementById("select-piece").value = piece.slug;
     document.getElementById("loader").style.display = 'block';
+    document.getElementById("intro").style.display = 'none';
+    document.getElementById("select-container").classList.remove("intro");
     YouTube.setPiece(piece);
     PDF.init(piece['pdfUrl']);
 }

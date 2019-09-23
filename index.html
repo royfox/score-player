@@ -14,7 +14,7 @@
       <button id="next">Next</button>
       &nbsp; &nbsp; &nbsp;
       <span class="debug">
-      Sync PDF and Video<input type="checkbox" id="sync" checked />
+      Sync score and video<input type="checkbox" id="sync" checked />
       </span>
     </div>
     <div id="loader" style="display:none;">
@@ -27,16 +27,28 @@
         <div class="rect5"></div>
       </div>
     </div>
-    <div id="select-container">
+    <div id="select-container" class="intro">
+      <div id="intro">
+          <p>This website is a simple tool that displays the full orchestral score for a classical piece
+          alongside a video of the piece being played, and keeps each in sync with the other. The scores are from
+            <a href = "https://imslp.org/">IMSLP</a>, and are all in the public domain. You can read more about
+            the idea behind the site and find some tips for using it <a href = "#">here</a>.
+          </p>
+          <p>
+            To get started, choose a piece from the following list:
+          </p>
+       </div>
       <form action="" method="get">
-        <select name="p" id="select-piece"></select>
+        <select name="p" id="select-piece">
+          <option selected disabled>Choose a piece</option>
+        </select>
         <button action="submit">Go</button>
       </form>
     </div>
-    <canvas id="pdf-canvas"></canvas>
+    <canvas id="pdf-canvas" style="visibility:hidden;"></canvas>
   </div>
   <div id="video-column">
-    <div id="video-container">
+    <div id="video-container" style="display:none;">
       <div id="video"></div>
     </div>
   </div>
